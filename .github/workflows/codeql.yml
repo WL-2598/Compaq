@@ -23,7 +23,7 @@ jobs:
           - language: javascript-typescript
             build-mode: none
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       # 该语言无源码时优雅跳过（CodeQL 会以 "no source code" 失败）
       - name: Check for analyzable source
         id: scan
