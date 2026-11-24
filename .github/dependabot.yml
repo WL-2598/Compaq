@@ -12,10 +12,13 @@ updates:
       - chore
     commit-message:
       prefix: "chore"
-  # 依赖清单就绪后（出现 package.json / pyproject.toml）追加对应生态：
-  # - package-ecosystem: npm
-  #   directory: "/"
-  #   schedule: { interval: weekly }
-  # - package-ecosystem: pip
-  #   directory: "/"
-  #   schedule: { interval: weekly }
+  # pip：运行时零依赖，仅覆盖构建工具链（requirements-docs.txt）
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - chore

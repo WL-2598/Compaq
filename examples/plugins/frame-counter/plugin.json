@@ -1,0 +1,10 @@
+{
+  "name": "frame-counter",
+  "version": "0.1.0",
+  "author": "WL-2598",
+  "license": "MIT",
+  "entry": "main.py",
+  "compatible_with": ">=0.1.0 <1.0.0",
+  "pricing": { "type": "free" },
+  "description": "每帧计数并在停止时把统计写入插件日志"
+}

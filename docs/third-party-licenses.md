@@ -1,8 +1,11 @@
 # 第三方许可证审计
 
-- 扫描日期：2026-11-24
+- 最近扫描：2026-11-24（随 v0.1.0）
 - 扫描范围：仓库根目录
-- 结果：**当前仓库无任何依赖清单（`package.json` / `pyproject.toml` / `go.mod` 均不存在），无第三方依赖，无许可证风险。**
+- 结果：**运行时零第三方依赖**（`pyproject.toml` 中 `dependencies = []`，代码仅用 Python 标准库），无许可证风险。
+  - 开发/测试：标准库 `unittest`，无额外包
+  - 文档站（仅构建期）：`mkdocs` + `mkdocs-material`（MIT / CC BY-NC-SA），见 `requirements-docs.txt`
+  - CI 工具：`build`（MIT），不随产品分发
 
 ## 重新扫描
 

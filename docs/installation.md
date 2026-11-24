@@ -1,14 +1,49 @@
 # 安装
 
-!!! info "待首个版本发布"
-    首个版本发布后，本页将包含：系统要求（重点覆盖老旧硬件）、包管理器安装、Docker 安装、离线安装四种路径。
+## 方式一：直接运行（推荐，零依赖）
 
-## 规划中的安装方式
+```bash
+git clone https://github.com/WL-2598/Compaq.git
+cd Compaq
+python3 -m compaq demo
+```
 
-| 方式 | 适用场景 | 状态 |
+- 需要 **Python 3.9+**，无需 pip 安装任何东西
+- 适合旧机器、受限环境、只想快速体验
+
+## 方式二：安装为命令行工具
+
+```bash
+cd Compaq
+pip install .        # 或 pipx install .（隔离环境，推荐）
+compaq version
+```
+
+卸载：`pip uninstall compaq`。
+
+## 方式三：Docker（托管/服务器）
+
+```bash
+cd deploy
+docker compose up -d
+# 仪表盘 → http://localhost:8642
+```
+
+镜像基于 `python:3.12-slim`，非 root 运行，内置健康检查与每日备份服务。详见 [deploy/README.md](https://github.com/WL-2598/Compaq/blob/main/deploy/README.md)。
+
+## 系统要求
+
+| 项 | 最低 | 说明 |
 |---|---|---|
-| 一键脚本 / 包管理器 | 日常开发与体验 | 规划中 |
-| Docker Compose | 服务器与家庭实验室 | 规划中（P2 托管版同源模板） |
-| 离线包 | 无外网的旧机器 | 规划中 |
+| Python | 3.9 | 仅标准库 |
+| 内存 | ~30MB | 实例 + 虚拟机 4KB 内存 |
+| 磁盘 | <5MB | 代码 + 实例数据 |
+| 网络 | 不需要 | 除克隆仓库外完全离线 |
 
-发布前请先看 [路线图](roadmap.md)。
+## 验证安装
+
+```bash
+python3 -m compaq doctor
+```
+
+输出四项 ✔ 即环境就绪。

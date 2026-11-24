@@ -1,10 +1,35 @@
 # 贡献指南
 
-感谢你对康柏（Compaq）的兴趣！项目目前处于预开发阶段：治理与文档先行，代码贡献将随首个里程碑开放。
+感谢你对康柏（Compaq）的兴趣！v0.1.0 已发布，欢迎代码、文档、插件与内容贡献。
 
 ## 行为准则
 
 参与本项目即表示你同意遵守 [行为准则](CODE_OF_CONDUCT.md)。
+
+## 本地开发（零依赖）
+
+```bash
+git clone https://github.com/WL-2598/Compaq.git
+cd Compaq
+
+# 运行测试（仅标准库 unittest）
+python3 -m unittest discover -s tests -v
+
+# 冒烟
+python3 -m compaq demo --frames 60 --no-color
+python3 -m compaq doctor
+python3 -m compaq registry validate
+
+# 可选：装成命令行工具
+pip install -e .
+```
+
+文档站预览：
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements-docs.txt
+.venv/bin/mkdocs serve
+```
 
 ## 贡献方式（DCO）
 
@@ -14,15 +39,11 @@
 git commit -s -m "fix: 修复某某问题"
 ```
 
-我们使用 DCO（Developer Certificate of Origin）。未带 sign-off 的 PR 将被 CI 提示补充：
+我们使用 DCO（Developer Certificate of Origin）。未带 sign-off 的 PR 会被 CI 拒绝：
 
 ```bash
 # 补救最近一次提交
 git commit --amend -s --no-edit
-
-# 补救已推送的提交（重写历史后需要强推自己的分支）
-git rebase HEAD~1 --exec 'git commit --amend -s --no-edit'
-git push --force-with-lease
 ```
 
 如果未来需要双授权（企业版），则将 DCO 升级为 CLA，使用 cla-assistant 机器人（见 [GOVERNANCE.md](GOVERNANCE.md)）。
@@ -31,9 +52,21 @@ git push --force-with-lease
 
 1. Fork 仓库，从 `main` 拉出分支：`feat/...`、`fix/...`、`docs/...`、`chore/...`
 2. 保持提交小而聚焦，使用约定式提交（Conventional Commits）
-3. 本地测试通过后发起 PR，填写 PR 模板全部栏目
-4. CI（DCO、CodeQL、文档构建）通过 + 至少 1 名维护者批准后合并
-5. 禁止向 `main` 直接推送或强制推送
+3. **测试必须通过**：`python3 -m unittest discover -s tests`（新行为请附测试）
+4. 发起 PR，填写 PR 模板全部栏目
+5. CI（DCO、test、CodeQL、docs）通过 + 至少 1 名维护者批准后合并
+6. 禁止向 `main` 直接推送或强制推送
+
+## 贡献插件（不必改核心代码）
+
+```bash
+mkdir -p my-plugin
+# 编写 plugin.json + main.py（钩子: on_boot / on_frame / on_stop）
+# 规范: registry/README.md   示例: examples/plugins/frame-counter/
+python3 -m compaq registry validate
+```
+
+把插件目录放进某实例的 `plugins/` 即可加载；发布到注册表则提 PR 更新 `registry/index.json`。
 
 ## AI 生成代码的声明
 
@@ -54,7 +87,7 @@ git push --force-with-lease
 
 ## 发布节奏
 
-采用语义化版本（SemVer）。每月一个 minor 版本，固定在每月第一个周二发布；变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+采用语义化版本（SemVer）。每月一个 minor 版本，固定在每月第一个周二发布；变更记录见 [CHANGELOG.md](CHANGELOG.md)。打 `v*.*.*` 标签自动触发 GitHub Release。
 
 ## 提问与报告
 
