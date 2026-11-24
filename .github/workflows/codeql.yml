@@ -23,11 +23,23 @@ jobs:
           - language: javascript-typescript
             build-mode: none
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
+      - uses: actions/checkout@v5
+      # 仓库尚无源码时优雅跳过（CodeQL 在空仓库上会以 "no source code" 失败）
+      - name: Check for analyzable source
+        id: scan
+        run: |
+          if git ls-files '*.py' '*.pyi' '*.js' '*.jsx' '*.ts' '*.tsx' '*.mjs' '*.cjs' | grep -q .; then
+            echo "has_code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_code=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::未发现可分析源码，跳过 CodeQL 分析"
+          fi
+      - uses: github/codeql-action/init@v4
+        if: steps.scan.outputs.has_code == 'true'
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4
+        if: steps.scan.outputs.has_code == 'true'
         with:
           category: "/language:${{ matrix.language }}"
