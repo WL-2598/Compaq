@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Compaq plugin manifest",
+  "type": "object",
+  "required": ["name", "version", "author", "license", "entry", "compatible_with", "pricing"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "全局唯一，小写字母/数字/连字符"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "description": "GitHub 用户名"
+    },
+    "license": {
+      "type": "string",
+      "enum": ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC"]
+    },
+    "entry": {
+      "type": "string",
+      "minLength": 1,
+      "description": "入口文件，例如 main.py"
+    },
+    "compatible_with": {
+      "type": "string",
+      "minLength": 1,
+      "description": "宿主 semver range，例如 >=1.0.0 <2.0.0"
+    },
+    "pricing": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string", "enum": ["free", "paid"] },
+        "amount": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "enum": ["CNY", "USD"] }
+      }
+    },
+    "repository": { "type": "string", "format": "uri" },
+    "description": { "type": "string", "maxLength": 200 }
+  }
+}

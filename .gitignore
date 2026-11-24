@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+
+# 环境与密钥（绝不提交）
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+.DS_Store
+
+# 构建与扫描产物
+site/
+scan.json
