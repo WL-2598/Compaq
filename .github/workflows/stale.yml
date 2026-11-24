@@ -10,7 +10,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v11
         with:
           stale-issue-message: "该 Issue 已超过 60 天无活动，标记为 stale。若问题仍存在请回复，我们将取消标记。"
           close-issue-message: "该 Issue 已超过 90 天无活动且无回复，自动关闭。欢迎随时重新打开或新开 Issue。"
