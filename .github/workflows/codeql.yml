@@ -24,15 +24,22 @@ jobs:
             build-mode: none
     steps:
       - uses: actions/checkout@v5
-      # 仓库尚无源码时优雅跳过（CodeQL 在空仓库上会以 "no source code" 失败）
+      # 该语言无源码时优雅跳过（CodeQL 会以 "no source code" 失败）
       - name: Check for analyzable source
         id: scan
+        env:
+          LANG: ${{ matrix.language }}
         run: |
-          if git ls-files '*.py' '*.pyi' '*.js' '*.jsx' '*.ts' '*.tsx' '*.mjs' '*.cjs' | grep -q .; then
+          case "$LANG" in
+            python) globs=('*.py' '*.pyi') ;;
+            javascript-typescript) globs=('*.js' '*.jsx' '*.ts' '*.tsx' '*.mjs' '*.cjs') ;;
+            *) globs=('*') ;;
+          esac
+          if git ls-files -- "${globs[@]}" | grep -q .; then
             echo "has_code=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_code=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::未发现可分析源码，跳过 CodeQL 分析"
+            echo "::notice::未发现 $LANG 源码，跳过该语言分析"
           fi
       - uses: github/codeql-action/init@v4
         if: steps.scan.outputs.has_code == 'true'
