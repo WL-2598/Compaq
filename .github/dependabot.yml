@@ -1,0 +1,24 @@
+version: 2
+updates:
+  # GitHub Actions 每周检查一次更新
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - chore
+    commit-message:
+      prefix: "chore"
+  # pip：运行时零依赖，仅覆盖构建工具链（requirements-docs.txt）
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - chore

@@ -1,0 +1,41 @@
+# 康柏托管版 MVP 编排（单节点）
+# 启动: docker compose up -d
+services:
+  compaq:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: compaq
+    restart: unless-stopped
+    ports:
+      - "8642:8642"
+    volumes:
+      - compaq-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8642/healthz', timeout=2)"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # 每日备份（镜像内无 cron，用 sleep 循环实现每日一次，保留最近 7 份）
+  backup:
+    image: python:3.12-slim
+    container_name: compaq-backup
+    restart: unless-stopped
+    depends_on:
+      - compaq
+    volumes:
+      - compaq-data:/data
+      - ./backup.sh:/backup.sh:ro
+    entrypoint: ["sh", "-c", "while true; do sh /backup.sh || true; sleep 86400; done"]
+
+  # 可选：自托管监控（取消注释即可）
+  # uptime-kuma:
+  #   image: louislam/uptime-kuma:1
+  #   ports: ["3001:3001"]
+  #   volumes: [uptime-data:/app/data]
+
+volumes:
+  compaq-data:
+  # uptime-data:

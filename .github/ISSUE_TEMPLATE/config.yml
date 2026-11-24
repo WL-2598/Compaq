@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全漏洞
+    url: https://github.com/WL-2598/Compaq/blob/main/SECURITY.md
+    about: 安全问题请按 SECURITY.md 私下上报，不要开公开 Issue
+  - name: 讨论与提问
+    url: https://github.com/WL-2598/Compaq/discussions
+    about: 使用问题、想法交流请到 Discussions（若未开启请先开 Issue 讨论）

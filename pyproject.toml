@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "compaq"
+version = "0.1.0"
+description = "康柏 Compaq — 复古计算环境：一键跑起复古机器，用插件扩展能力"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Compaq contributors" }]
+keywords = ["retro", "chip-8", "emulator", "retro-computing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: System :: Emulators",
+]
+# 运行时零第三方依赖（许可证审计见 docs/third-party-licenses.md）
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/WL-2598/Compaq"
+Documentation = "https://github.com/WL-2598/Compaq/blob/main/docs/quickstart.md"
+Roadmap = "https://github.com/WL-2598/Compaq/blob/main/docs/roadmap.md"
+
+[project.scripts]
+compaq = "compaq.cli:main"
+
+[tool.setuptools]
+packages = ["compaq", "compaq.machines"]
