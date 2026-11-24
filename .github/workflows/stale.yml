@@ -1,0 +1,22 @@
+name: stale
+on:
+  schedule:
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v9
+        with:
+          stale-issue-message: "该 Issue 已超过 60 天无活动，标记为 stale。若问题仍存在请回复，我们将取消标记。"
+          close-issue-message: "该 Issue 已超过 90 天无活动且无回复，自动关闭。欢迎随时重新打开或新开 Issue。"
+          stale-pr-message: "该 PR 已超过 60 天无活动，标记为 stale。若仍在推进请回复或 rebase 到最新 main。"
+          days-before-stale: 60
+          days-before-close: 30
+          exempt-issue-labels: "pinned,security,bounty"
+          exempt-all-milestones: true
+          operations-per-run: 60

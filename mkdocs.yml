@@ -1,0 +1,38 @@
+site_name: 康柏（Compaq）文档
+site_description: 复古计算环境项目的文档站
+repo_url: https://github.com/WL-2598/Compaq
+repo_name: WL-2598/Compaq
+edit_uri: edit/main/docs/
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+nav:
+  - 首页: index.md
+  - 快速开始: quickstart.md
+  - 安装: installation.md
+  - 配置参考: configuration.md
+  - 常见问题: faq.md
+  - 故障排查: troubleshooting.md
+  - 架构说明: architecture.md
+  - 贡献指南: contributing.md
+  - 项目治理:
+      - 社区宪章: charter.md
+      - 路线图: roadmap.md
+      - 指标看板: metrics.md
+      - 命名方案: naming.md
+      - 内容日历: content-calendar.md
+      - 第三方许可证审计: third-party-licenses.md
+      - 财务报告模板: finance/TEMPLATE.md
+      - 托管服务法律清单: legal/hosted-service-checklist.md
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - tables
+plugins:
+  - search
